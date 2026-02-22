@@ -5,7 +5,7 @@ def get_welcome_keyboard():
     keyboard = VkKeyboard(inline=True)
     keyboard.add_button("📋 Выбрать из меню / Оформить заявку", color=VkKeyboardColor.POSITIVE)
     keyboard.add_line()
-    keyboard.add_openlink_button("🚀 Открыть приложение (Примеры и цены)", link="http://109.73.198.248:3000/")
+    keyboard.add_openlink_button("🚀 Открыть приложение (Примеры и цены)", link="https://teh-anna.vercel.app/")
     return keyboard.get_keyboard()
 
 def get_main_keyboard():
