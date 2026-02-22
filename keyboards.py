@@ -1,13 +1,12 @@
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 
+# Постоянная кнопка каталога (есть в каждом меню)
+CATALOG_BTN = "📖 Каталог (примеры и цены)"
+
 def get_welcome_keyboard():
-    """Клавиатура шага 1: Приветствие — кнопка-ссылка + кнопка заявки"""
+    """Клавиатура шага 1: Приветствие"""
     keyboard = VkKeyboard(one_time=False)
-    # URL-кнопка: открывает сайт при нажатии (без текстовой ссылки в сообщении)
-    keyboard.add_openlink_button(
-        label="🔗 Открыть приложение (примеры и цены)",
-        link="https://tehnologiya-nv.duckdns.org/"
-    )
+    keyboard.add_button(CATALOG_BTN, color=VkKeyboardColor.SECONDARY)
     keyboard.add_line()
     keyboard.add_button("📋 Выбрать из меню / Оформить заявку", color=VkKeyboardColor.POSITIVE)
     return keyboard.get_keyboard()
@@ -29,6 +28,10 @@ def get_main_keyboard():
     
     keyboard.add_button("🧮 Быстрый расчёт", color=VkKeyboardColor.SECONDARY)
     keyboard.add_button("📍 Адрес", color=VkKeyboardColor.SECONDARY)
+    keyboard.add_line()
+    
+    # Постоянная кнопка каталога
+    keyboard.add_button(CATALOG_BTN, color=VkKeyboardColor.SECONDARY)
     
     return keyboard.get_keyboard()
 
@@ -38,6 +41,7 @@ def get_design_need_keyboard():
     keyboard.add_button("🎨 Нет макета, нужен дизайн", color=VkKeyboardColor.PRIMARY)
     keyboard.add_line()
     keyboard.add_button("🔙 Назад", color=VkKeyboardColor.NEGATIVE)
+    keyboard.add_button(CATALOG_BTN, color=VkKeyboardColor.SECONDARY)
     return keyboard.get_keyboard()
 
 def get_delivery_keyboard():
@@ -49,6 +53,7 @@ def get_delivery_keyboard():
     keyboard.add_button("✍️ Уточним позже", color=VkKeyboardColor.SECONDARY)
     keyboard.add_line()
     keyboard.add_button("🔙 Назад", color=VkKeyboardColor.NEGATIVE)
+    keyboard.add_button(CATALOG_BTN, color=VkKeyboardColor.SECONDARY)
     return keyboard.get_keyboard()
 
 def get_design_transition_keyboard():
@@ -59,6 +64,7 @@ def get_design_transition_keyboard():
     keyboard.add_button("⏩ Пропустить, менеджер уточнит", color=VkKeyboardColor.SECONDARY)
     keyboard.add_line()
     keyboard.add_button("🔙 Главное меню", color=VkKeyboardColor.NEGATIVE)
+    keyboard.add_button(CATALOG_BTN, color=VkKeyboardColor.SECONDARY)
     return keyboard.get_keyboard()
 
 def get_mood_keyboard():
@@ -71,6 +77,7 @@ def get_mood_keyboard():
     keyboard.add_button("✍️ Своё", color=VkKeyboardColor.PRIMARY)
     keyboard.add_line()
     keyboard.add_button("🔙 Назад", color=VkKeyboardColor.NEGATIVE)
+    keyboard.add_button(CATALOG_BTN, color=VkKeyboardColor.SECONDARY)
     return keyboard.get_keyboard()
 
 def get_calculator_keyboard(services):
@@ -84,6 +91,7 @@ def get_calculator_keyboard(services):
         
     keyboard.add_line()
     keyboard.add_button("🔙 Назад", color=VkKeyboardColor.NEGATIVE)
+    keyboard.add_button(CATALOG_BTN, color=VkKeyboardColor.SECONDARY)
     
     return keyboard.get_keyboard()
 
@@ -93,18 +101,22 @@ def get_calc_result_keyboard():
     keyboard.add_button("🔄 Считать ещё", color=VkKeyboardColor.PRIMARY)
     keyboard.add_line()
     keyboard.add_button("📋 Оформить заявку", color=VkKeyboardColor.POSITIVE)
+    keyboard.add_line()
+    keyboard.add_button(CATALOG_BTN, color=VkKeyboardColor.SECONDARY)
     return keyboard.get_keyboard()
 
 def get_cancel_keyboard():
     """Кнопка отмены для сценариев"""
     keyboard = VkKeyboard(one_time=False)
     keyboard.add_button("🔙 Назад", color=VkKeyboardColor.NEGATIVE)
+    keyboard.add_button(CATALOG_BTN, color=VkKeyboardColor.SECONDARY)
     return keyboard.get_keyboard()
 
 def get_back_keyboard():
     """Кнопка назад"""
     keyboard = VkKeyboard(one_time=False)
     keyboard.add_button("🔙 Назад", color=VkKeyboardColor.NEGATIVE)
+    keyboard.add_button(CATALOG_BTN, color=VkKeyboardColor.SECONDARY)
     return keyboard.get_keyboard()
 
 def get_finish_keyboard():
@@ -112,5 +124,6 @@ def get_finish_keyboard():
     keyboard = VkKeyboard(one_time=False)
     keyboard.add_button("🔄 Заказать ещё", color=VkKeyboardColor.PRIMARY)
     keyboard.add_button("📍 Адрес и контакты", color=VkKeyboardColor.SECONDARY)
+    keyboard.add_line()
+    keyboard.add_button(CATALOG_BTN, color=VkKeyboardColor.SECONDARY)
     return keyboard.get_keyboard()
-

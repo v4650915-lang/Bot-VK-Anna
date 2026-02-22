@@ -154,8 +154,19 @@ def handle_event(vk, event, upload):
         send_message(vk, user_id, "Вы вернулись в главное меню.", keyboards.get_main_keyboard())
         return
 
+    # --- Глобальный перехватчик кнопки «Каталог» (работает из любого экрана) ---
+    if keyboards.CATALOG_BTN in text:
+        send_message(
+            vk, user_id,
+            "📖 Наш каталог с примерами и актуальными прайсами:\n"
+            "👉 https://tehnologiya-nv.duckdns.org/\n\n"
+            "Открывайте ссылку, смотрите работы и цены. Если будут вопросы — жмите кнопку ниже 👇"
+        )
+        return
+
     # --- Обработка Deep Links ---
     branch_map = {
+
         "sign": ("SIGN_STEP_0", questions.SIGN_QUESTIONS[0]["text"], keyboards.get_cancel_keyboard()),
         "banner": ("PRINT_STEP_0", questions.PRINT_QUESTIONS[0]["text"], keyboards.get_cancel_keyboard()),
         "mangal": ("MANGAL_STEP_0", questions.MANGAL_QUESTIONS[0]["text"], keyboards.get_cancel_keyboard()),
