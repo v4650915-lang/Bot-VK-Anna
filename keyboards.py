@@ -1,17 +1,11 @@
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 
 def get_welcome_keyboard():
-    """Клавиатура шага 1: Приветствие"""
-    keyboard = VkKeyboard(one_time=False)
-    keyboard.add_button("✅ Да, знаю что хочу", color=VkKeyboardColor.POSITIVE)
+    """Клавиатура шага 1: Приветствие (Inline с ссылкой)"""
+    keyboard = VkKeyboard(inline=True)
+    keyboard.add_button("📋 Выбрать из меню / Оформить заявку", color=VkKeyboardColor.POSITIVE)
     keyboard.add_line()
-    keyboard.add_button("👀 Хочу посмотреть примеры и цены", color=VkKeyboardColor.PRIMARY)
-    return keyboard.get_keyboard()
-
-def get_welcome_order_keyboard():
-    """Заказ после просмотра примеров"""
-    keyboard = VkKeyboard(one_time=False)
-    keyboard.add_button("📋 Оформить заявку", color=VkKeyboardColor.POSITIVE)
+    keyboard.add_openlink_button("🚀 Открыть приложение (Примеры и цены)", link="http://109.73.198.248:3000/")
     return keyboard.get_keyboard()
 
 def get_main_keyboard():

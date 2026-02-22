@@ -106,11 +106,7 @@ def handle_event(vk, event, upload):
 
     # --- Обработка Cancel / Назад (откат на 1 шаг или в Главное меню) ---
     if text == "❌ Отмена" or text == "🔙 Назад" or text == "🔙 Главное меню":
-        if state == "WELCOME_ORDER":
-            storage.set_user_state(user_id, storage.STATE_WELCOME)
-            send_message(vk, user_id, "Привет! 👋 Я помогу рассчитать стоимость или оформить заявку на вывески, баннеры и металлоизделия.\n\nВы уже знаете, что хотите заказать?", keyboards.get_welcome_keyboard())
-            return
-        elif state == storage.STATE_CALC_WAIT_QTY:
+        if state == storage.STATE_CALC_WAIT_QTY:
             storage.set_user_state(user_id, storage.STATE_MENU)
             send_message(vk, user_id, "Выберите услугу для расчета:", keyboards.get_calculator_keyboard(calculator.get_services_list()))
             return
@@ -176,31 +172,13 @@ def handle_event(vk, event, upload):
 
     # --- Логика Приветствия ---
     if state == storage.STATE_WELCOME:
-        if text == "✅ Да, знаю что хочу":
-            storage.set_user_state(user_id, storage.STATE_MENU)
-            send_message(vk, user_id, "Выберите, что вас интересует 👇", keyboards.get_main_keyboard())
-        elif text == "👀 Хочу посмотреть примеры и цены":
-            storage.set_user_state(user_id, "WELCOME_ORDER")
-            send_message(vk, user_id, "Конечно! Смотрите наши работы и цены 👇\nhttp://109.73.198.248:3000/")
-            # Имитация задержки сообщений лучше не делать time.sleep в async/longpoll, отправим сразу
-            send_message(vk, user_id, "Когда будете готовы — нажмите кнопку ниже и оформим заявку 👇", keyboards.get_welcome_order_keyboard())
-        elif state == "WELCOME_ORDER" and text == "📋 Оформить заявку":
+        if text == "📋 Выбрать из меню / Оформить заявку" or text == "✅ Да, знаю что хочу" or text == "📋 Оформить заявку":
             storage.set_user_state(user_id, storage.STATE_MENU)
             send_message(vk, user_id, "Выберите, что вас интересует 👇", keyboards.get_main_keyboard())
         else:
             # Любое другое сообщение - показываем приветствие
             storage.set_user_state(user_id, storage.STATE_WELCOME)
-            send_message(vk, user_id, "Привет! 👋 Я помогу рассчитать стоимость или оформить заявку на вывески, баннеры и металлоизделия.\n\nВы уже знаете, что хотите заказать?", keyboards.get_welcome_keyboard())
-            
-    # --- Логика WELCOME_ORDER ---
-    elif state == "WELCOME_ORDER":
-        if text == "📋 Оформить заявку":
-            storage.set_user_state(user_id, storage.STATE_MENU)
-            send_message(vk, user_id, "Выберите, что вас интересует 👇", keyboards.get_main_keyboard())
-        else:
-            # Возврат к приветствию
-            storage.set_user_state(user_id, storage.STATE_WELCOME)
-            send_message(vk, user_id, "Привет! 👋 Я помогу рассчитать стоимость или оформить заявку на вывески, баннеры и металлоизделия.\n\nВы уже знаете, что хотите заказать?", keyboards.get_welcome_keyboard())
+            send_message(vk, user_id, "Привет! 👋 Я помогу рассчитать стоимость или оформить заявку на вывески, баннеры и металлоизделия.\n\nНажмите кнопку ниже, чтобы открыть приложение с примерами или перейти к заказу:", keyboards.get_welcome_keyboard())
 
 
     # --- Логика ГЛАВНОГО МЕНЮ ---
