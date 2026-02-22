@@ -4,8 +4,6 @@ def get_welcome_keyboard():
     """Клавиатура шага 1: Приветствие (Inline с ссылкой)"""
     keyboard = VkKeyboard(inline=True)
     keyboard.add_button("📋 Выбрать из меню / Оформить заявку", color=VkKeyboardColor.POSITIVE)
-    keyboard.add_line()
-    keyboard.add_openlink_button("🚀 Открыть приложение (Примеры и цены)", link="https://change-oscar-decisions-command.trycloudflare.com/")
     return keyboard.get_keyboard()
 
 def get_main_keyboard():
