@@ -133,7 +133,7 @@ def handle_event(vk, event, upload):
             send_message(vk, user_id, "Выберите, что вас интересует 👇", keyboards.get_main_keyboard())
         elif text == "👀 Хочу посмотреть примеры и цены":
             storage.set_user_state(user_id, "WELCOME_ORDER")
-            send_message(vk, user_id, "Конечно! Смотрите наши работы и цены 👇\nhttps://v-kapp-kf5p.vercel.app/")
+            send_message(vk, user_id, "Конечно! Смотрите наши работы и цены 👇\nhttp://109.73.198.248:3000/")
             # Имитация задержки сообщений лучше не делать time.sleep в async/longpoll, отправим сразу
             send_message(vk, user_id, "Когда будете готовы — нажмите кнопку ниже и оформим заявку 👇", keyboards.get_welcome_order_keyboard())
         elif state == "WELCOME_ORDER" and text == "📋 Оформить заявку":
