@@ -39,7 +39,7 @@ def get_design_need_keyboard():
     keyboard = VkKeyboard(one_time=False)
     keyboard.add_button("🎨 Нет макета, нужен дизайн", color=VkKeyboardColor.PRIMARY)
     keyboard.add_line()
-    keyboard.add_button("❌ Отмена", color=VkKeyboardColor.NEGATIVE)
+    keyboard.add_button("🔙 Назад", color=VkKeyboardColor.NEGATIVE)
     return keyboard.get_keyboard()
 
 def get_delivery_keyboard():
@@ -50,7 +50,7 @@ def get_delivery_keyboard():
     keyboard.add_line()
     keyboard.add_button("✍️ Уточним позже", color=VkKeyboardColor.SECONDARY)
     keyboard.add_line()
-    keyboard.add_button("❌ Отмена", color=VkKeyboardColor.NEGATIVE)
+    keyboard.add_button("🔙 Назад", color=VkKeyboardColor.NEGATIVE)
     return keyboard.get_keyboard()
 
 def get_design_transition_keyboard():
@@ -59,6 +59,8 @@ def get_design_transition_keyboard():
     keyboard.add_button("▶️ Заполнить бриф", color=VkKeyboardColor.POSITIVE)
     keyboard.add_line()
     keyboard.add_button("⏩ Пропустить, менеджер уточнит", color=VkKeyboardColor.SECONDARY)
+    keyboard.add_line()
+    keyboard.add_button("🔙 Главное меню", color=VkKeyboardColor.NEGATIVE)
     return keyboard.get_keyboard()
 
 def get_mood_keyboard():
@@ -70,7 +72,7 @@ def get_mood_keyboard():
     keyboard.add_button("☀️ Уют", color=VkKeyboardColor.PRIMARY)
     keyboard.add_button("✍️ Своё", color=VkKeyboardColor.PRIMARY)
     keyboard.add_line()
-    keyboard.add_button("❌ Отмена", color=VkKeyboardColor.NEGATIVE)
+    keyboard.add_button("🔙 Назад", color=VkKeyboardColor.NEGATIVE)
     return keyboard.get_keyboard()
 
 def get_calculator_keyboard(services):
@@ -83,7 +85,7 @@ def get_calculator_keyboard(services):
         keyboard.add_button(name, color=VkKeyboardColor.PRIMARY, payload={"type": "calc_service", "item": key})
         
     keyboard.add_line()
-    keyboard.add_button("❌ Отмена", color=VkKeyboardColor.NEGATIVE)
+    keyboard.add_button("🔙 Назад", color=VkKeyboardColor.NEGATIVE)
     
     return keyboard.get_keyboard()
 
@@ -98,7 +100,7 @@ def get_calc_result_keyboard():
 def get_cancel_keyboard():
     """Кнопка отмены для сценариев"""
     keyboard = VkKeyboard(one_time=False)
-    keyboard.add_button("❌ Отмена", color=VkKeyboardColor.NEGATIVE)
+    keyboard.add_button("🔙 Назад", color=VkKeyboardColor.NEGATIVE)
     return keyboard.get_keyboard()
 
 def get_back_keyboard():

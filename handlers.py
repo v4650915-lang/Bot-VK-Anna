@@ -104,9 +104,57 @@ def handle_event(vk, event, upload):
     user_data = storage.get_user_state(user_id)
     state = user_data["state"]
 
-    # --- Обработка Cancel везде ---
-    if text == "❌ Отмена" or text == "🔙 Назад":
-        storage.clear_user_state(user_id)
+    # --- Обработка Cancel / Назад (откат на 1 шаг или в Главное меню) ---
+    if text == "❌ Отмена" or text == "🔙 Назад" or text == "🔙 Главное меню":
+        if state == "WELCOME_ORDER":
+            storage.set_user_state(user_id, storage.STATE_WELCOME)
+            send_message(vk, user_id, "Привет! 👋 Я помогу рассчитать стоимость или оформить заявку на вывески, баннеры и металлоизделия.\n\nВы уже знаете, что хотите заказать?", keyboards.get_welcome_keyboard())
+            return
+        elif state == storage.STATE_CALC_WAIT_QTY:
+            storage.set_user_state(user_id, storage.STATE_MENU)
+            send_message(vk, user_id, "Выберите услугу для расчета:", keyboards.get_calculator_keyboard(calculator.get_services_list()))
+            return
+        elif state == "DESIGN_TRANSITION":
+            storage.set_user_state(user_id, storage.STATE_MENU)
+            send_message(vk, user_id, "Вы вернулись в главное меню.", keyboards.get_main_keyboard())
+            return
+        elif any(state.startswith(pref) for pref in ["SIGN_STEP_", "PRINT_STEP_", "MANGAL_STEP_", "MEMORIAL_STEP_", "SOUVENIR_STEP_", "DESIGN_STEP_"]):
+            prefix = state.split("_STEP_")[0]
+            step_index = int(state.split("_STEP_")[1])
+            
+            if prefix == "SIGN": q_list = questions.SIGN_QUESTIONS
+            elif prefix == "PRINT": q_list = questions.PRINT_QUESTIONS
+            elif prefix == "MANGAL": q_list = questions.MANGAL_QUESTIONS
+            elif prefix == "MEMORIAL": q_list = questions.MEMORIAL_QUESTIONS
+            elif prefix == "SOUVENIR": q_list = questions.SOUVENIR_QUESTIONS
+            elif prefix == "DESIGN": q_list = questions.DESIGN_QUESTIONS
+            
+            if step_index > 0:
+                # Откат на шаг назад
+                prev_step = step_index - 1
+                storage.set_user_state(user_id, f"{prefix}_STEP_{prev_step}", user_data.get("data", {}))
+                
+                # Показываем предыдущий вопрос со стандартной кнопкой "Назад"
+                # (для 4-го вопроса дизайна или конца особых брифов нужно поставить правильную клаву, но т.к. мы откатываемся
+                # то это не конец. Разве что для дизайна 4 шаг, но там step_index=3, поэтому если возвращаемся на него:
+                if prefix == "DESIGN" and prev_step == 3:
+                     send_message(vk, user_id, q_list[prev_step]["text"], keyboards.get_mood_keyboard())
+                else:
+                     send_message(vk, user_id, q_list[prev_step]["text"], keyboards.get_cancel_keyboard())
+                return
+            else:
+                # Если step_index == 0, возвращаемся в меню (или в конец основного брифа, если это был дизайн-бриф)
+                if prefix == "DESIGN":
+                    # Возврат на развилку
+                    storage.set_user_state(user_id, "DESIGN_TRANSITION", user_data.get("data", {}))
+                    send_message(vk, user_id, "Возврат к вопросу о дизайне макета.", keyboards.get_design_transition_keyboard())
+                else:
+                    storage.set_user_state(user_id, storage.STATE_MENU)
+                    send_message(vk, user_id, "Вы вернулись в главное меню.", keyboards.get_main_keyboard())
+                return
+                
+        # Если прочие состояния, просто сброс в главное меню
+        storage.set_user_state(user_id, storage.STATE_MENU)
         send_message(vk, user_id, "Вы вернулись в главное меню.", keyboards.get_main_keyboard())
         return
 
@@ -227,7 +275,7 @@ def handle_event(vk, event, upload):
             send_message(vk, user_id, msg, keyboards.get_finish_keyboard())
             storage.set_user_state(user_id, "FINISH_SCREEN")
         else:
-            send_message(vk, user_id, "Пожалуйста, ответьте на вопрос выше или нажмите ❌ Отмена", keyboards.get_design_transition_keyboard())
+            send_message(vk, user_id, "Пожалуйста, ответьте на вопрос выше или нажмите 🔙 Главное меню", keyboards.get_design_transition_keyboard())
 
     # --- FINISH SCREEN (кнопки Заказать еще и Адрес) ---
     elif state == "FINISH_SCREEN":
