@@ -1,8 +1,14 @@
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 
 def get_welcome_keyboard():
-    """Клавиатура шага 1: Приветствие"""
+    """Клавиатура шага 1: Приветствие — кнопка-ссылка + кнопка заявки"""
     keyboard = VkKeyboard(one_time=False)
+    # URL-кнопка: открывает сайт при нажатии (без текстовой ссылки в сообщении)
+    keyboard.add_openlink_button(
+        label="🔗 Открыть приложение (примеры и цены)",
+        link="https://tehnologiya-nv.duckdns.org/"
+    )
+    keyboard.add_line()
     keyboard.add_button("📋 Выбрать из меню / Оформить заявку", color=VkKeyboardColor.POSITIVE)
     return keyboard.get_keyboard()
 
