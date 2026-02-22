@@ -1,8 +1,8 @@
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 
 def get_welcome_keyboard():
-    """Клавиатура шага 1: Приветствие (Inline с ссылкой)"""
-    keyboard = VkKeyboard(inline=True)
+    """Клавиатура шага 1: Приветствие"""
+    keyboard = VkKeyboard(one_time=False)
     keyboard.add_button("📋 Выбрать из меню / Оформить заявку", color=VkKeyboardColor.POSITIVE)
     return keyboard.get_keyboard()
 
