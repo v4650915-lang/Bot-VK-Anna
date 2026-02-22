@@ -172,7 +172,7 @@ def handle_event(vk, event, upload):
 
     # --- Логика Приветствия ---
     if state == storage.STATE_WELCOME:
-        if text == "📋 Выбрать из меню / Оформить заявку" or text == "✅ Да, знаю что хочу" or text == "📋 Оформить заявку":
+        if "Выбрать из меню" in text or "Да, знаю что хочу" in text or "Оформить заявку" in text:
             storage.set_user_state(user_id, storage.STATE_MENU)
             send_message(vk, user_id, "Выберите, что вас интересует 👇", keyboards.get_main_keyboard())
         else:
