@@ -3,7 +3,7 @@ from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 def get_welcome_keyboard():
     """Клавиатура шага 1: Приветствие"""
     keyboard = VkKeyboard(one_time=False)
-    keyboard.add_openlink_button("🚀 Открыть приложение", link="https://v4650915-lang.github.io/VKapp/")
+    keyboard.add_openlink_button("🚀 Открыть приложение", link="https://tehnologiya-nv.ru/")
     keyboard.add_line()
     keyboard.add_button("📋 Выбрать из меню / Оформить заявку", color=VkKeyboardColor.POSITIVE)
     return keyboard.get_keyboard()
@@ -12,7 +12,7 @@ def get_main_keyboard():
     """Главное меню (Шаг 2)"""
     keyboard = VkKeyboard(one_time=False)
     
-    keyboard.add_openlink_button("🚀 Открыть приложение", link="https://v4650915-lang.github.io/VKapp/")
+    keyboard.add_openlink_button("🚀 Открыть приложение", link="https://tehnologiya-nv.ru/")
     keyboard.add_line()
 
     keyboard.add_button("🪧 Вывески и фасады", color=VkKeyboardColor.PRIMARY)
